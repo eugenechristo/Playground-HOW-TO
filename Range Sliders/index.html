@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Sliders</title>
+   <style>
+      body {
+         margin: 0;
+         padding: 0 50px;
+         text-align: center;
+         background-color: rgb(25, 32, 32);
+         color:bisque;
+      }
+
+      #demo {
+         font-size: 200%;
+      }
+
+      .slidecontainer {
+         width: 100%;
+      }
+
+      /* The slider itself */
+
+      .slider {
+         -webkit-appearance: none;
+         appearance: none;
+         width: 90vw;
+         height: 25px;
+         background: violet;
+         outline: none;
+         opacity: 0.5;
+         transition: all .3s;
+         margin: 20px;
+      }
+
+      .slider:hover {
+         opacity: 0.8;
+      }
+
+      .slider::-webkit-slider-thumb {
+         -webkit-appearance: none;
+         appearance: none;
+         width: 25px;
+         height: 25px;
+         background: rgb(192, 11, 192);
+         cursor: move;
+      }
+
+      .slider::-moz-range-thumb {
+         border-radius: 0;
+         width: 25px;
+         height: 25px;
+         background: rgb(192, 11, 192);
+         cursor: move;
+      }
+
+      .slider-round {
+         height: 10px;
+         border-radius: 10px;
+      }
+
+      .slider-round::-webkit-slider-thumb {
+         border-radius: 50%;
+      }
+
+      .slider-img {
+         height: 10px;
+         border-radius: 5px;
+      }
+
+      .slider-img::-webkit-slider-thumb {
+         border-radius: 50%;
+         background-color: transparent;
+         background: url('img.png');
+      }
+   </style>
+</head>
+
+<body>
+   <h1>Custom Range Slider</h1>
+   <p>Drag the slider to display the current value.</p>
+
+   <div class="slidecontainer">
+      <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+      <input type="range" min="1" max="100" value="50" class="slider slider-round" id="myRange2">
+      <input type="range" min="1" max="100" value="50" class="slider slider-img" id="myRange3">
+      
+      <p>Value: <span id="demo"></span></p>
+   </div>
+
+   <script>
+      const output = document.getElementById('demo');
+      const slider = document.getElementById('myRange');
+      const slider2 = document.getElementById('myRange2');
+      const slider3 = document.getElementById('myRange3');
+
+      output.textContent = slider.value;
+
+      slider.oninput = (e) => {
+         output.textContent = e.target.value;
+      } 
+
+      slider2.oninput = (e) => {
+         output.textContent = e.target.value;
+      } 
+
+      slider3.oninput = (e) => {
+         output.textContent = e.target.value;
+      }
+
+   </script>
+</body>
+
+</html>
