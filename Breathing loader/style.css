@@ -1,0 +1,148 @@
+body {
+   font-family: 'Raleway', sans-serif;
+}
+
+.wrapper {
+   width: 1000px;
+   margin: auto;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+h1 {
+   font-size: 60px;
+   font-weight: 300;
+   margin-bottom: 100px;  
+   animation: title 1s 1s linear backwards; 
+}
+
+@keyframes title {
+   0% {
+      opacity: 0;
+      transform: scale(1);
+   }
+
+   50% {
+      transform: scale(1.05);      
+   }
+
+   100% {
+      opacity: 1;
+      transform: scale(1);      
+   }
+}
+
+p {
+   font-size: 30px;
+   animation: showparagraph .3s 6s backwards ease-out;
+}
+
+@keyframes showparagraph {
+   0% {
+      transform: translateX(-1000px);
+   }
+
+   80% {
+      transform: translateX(40px);
+      
+   }
+
+   81% {
+      transform: translateX(40px);
+      
+   }
+
+   82% {
+      transform: translateX(44px);  
+   }
+
+   83% {
+      transform: translateX(44px);  
+   }
+
+   84% {
+      transform: translateX(48px);  
+   }
+
+   85% {
+      transform: translateX(48px);  
+   }
+
+   86% {
+      transform: translateX(52px);  
+   }
+
+   87% {
+      transform: translateX(52px);  
+   }
+
+
+   100% {
+      transform: translateX(0);
+   }
+}
+
+.loader {
+   margin-bottom: 100px;     
+   width: 150px;
+   height: 150px;
+   background-color: rgba(3, 192, 192, .5);
+   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .8));
+   
+   border: 15px solid rgb(223, 223, 223);
+   border-left-color: rgb(3, 192, 192);
+   border-right-color: rgb(19, 160, 216);
+   border-radius: 50%;
+   animation: showloader 1s 2s backwards, spinloader 1s 3s linear infinite, bgc .5s 3s infinite alternate;
+   
+}
+
+@keyframes showloader{
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 1;
+   }
+}
+
+@keyframes bgc {
+   from {
+       background-color: rgba(3, 192, 192, .5);
+      
+   }
+
+   to {
+      background-color: rgba(19, 160, 216, .5);
+      
+   }
+}
+
+@keyframes spinloader {
+   0% {
+      transform: rotate(0) scale(1);
+      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .8));
+   }
+
+   25% {
+      transform: rotate(90deg) scale(1.05);
+      filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .7));
+   }
+
+   50% {
+      transform: rotate(180deg) scale(1.2); 
+      filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, .6));      
+   }
+
+   75% {
+      transform: rotate(270deg) scale(1.05);
+      filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, .7));
+   }
+
+   100% {
+      transform: rotate(360deg) scale(1);
+      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, .8));      
+   }
+}
