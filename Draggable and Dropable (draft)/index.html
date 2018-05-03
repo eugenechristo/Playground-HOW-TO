@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Task List</title>
+</head>
+<style>
+  img {
+    width: 50px;
+    cursor: -webkit-grab;
+  }
+
+  img:active {
+    cursor: -webkit-grabbing;
+  }
+
+  .dropable {
+    width: 150px;
+    height: 150px;
+    background-color: rgba(0,0,0, .6);
+    font-size: 30px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    transition: .4s;
+  }
+
+  .dropable__text {
+    text-align: center;
+    display: inline-block;
+  }
+
+  .container {
+    background-color: red;
+    width: 200px;
+    height: 200px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  }
+
+  @keyframes blink {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+  
+</style>
+
+<body>
+
+  <div class="container">
+      <div class="dropable" id="gate"><p class="dropable__text" id="gateText">DROP HERE</p></div>
+  </div>
+  
+
+  <img src="ball.png" alt="pokeball" id="ball">
+ 
+  <script>
+    const ball = document.getElementById('ball');
+    const gate = document.getElementById('gate');
+    const gateText = document.getElementById('gateText');
+
+    ball.addEventListener('mousedown', function(e) {
+
+      ball.style.position = 'absolute';
+      ball.style.zIndex = '1000';
+      moveAt(e.pageX, e.pageY);
+
+      function moveAt(pageX, pageY) {
+        ball.style.top = pageY - e.offsetY + 'px';
+        ball.style.left = pageX - e.offsetX  + 'px';
+      };
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+
+        ball.hidden = true;
+        let elemBelowCursor = document.elementFromPoint(event.clientX, event.clientY);
+        ball.hidden = false;
+        
+        if(!elemBelowCursor) return;
+
+       let canDrop = elemBelowCursor.closest('.dropable');
+
+       canDrop ?  youCanDrop() : youCannotDrop();
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      ball.addEventListener('mouseup', function(e) {
+        document.removeEventListener('mousemove', onMouseMove);
+        youCannotDrop();
+      });
+
+      this.addEventListener('dragstart', function(e) {       
+        e.preventDefault();
+      });
+
+    });
+
+    function youCanDrop() {
+      gate.style.backgroundColor = 'rgba(255,255,255,.5)';
+      gateText.style.animation = 'blink .3s alternate infinite';
+    }
+
+    function youCannotDrop() {
+      gate.style.backgroundColor = '';
+      gateText.style.animation = '';      
+    }
+
+  </script>
+
+
+  <script type="text/javascript" src="script.js"></script>
+
+</body>
+
+</html>
