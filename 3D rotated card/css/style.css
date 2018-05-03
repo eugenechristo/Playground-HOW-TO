@@ -1,0 +1,63 @@
+html {
+  font-size: 62.5%; }
+
+* {
+  box-sizing: border-box;
+  font-size: 3.6rem;
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center; }
+
+.album {
+  width: 300px;
+  height: 400px;
+  position: relative;
+  -webkit-perspective: 1000px;
+          perspective: 1000px; }
+
+.card {
+  width: 100%;
+  height: 400px;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d; }
+  .card:hover .front {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg); }
+  .card:hover .back {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg); }
+
+.front {
+  background-image: linear-gradient(110deg, yellow 50%, orange);
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  transition: 4s;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0);
+  z-index: 1; }
+  .front img {
+    opacity: .5; }
+
+.back {
+  background-image: linear-gradient(140deg, rgba(0, 255, 200, 0.5), rgba(0, 110, 255, 0.5));
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  transition: 4s;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg); }
+  .back span {
+    color: #1a143b;
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }
