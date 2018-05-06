@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Task List</title>
+</head>
+<style>
+
+  body {
+    height: 2000px;
+  }
+
+  .wrapper {
+    padding: 10px 60px;
+  }
+
+ .rewind {
+   color: rgba(0, 102, 255, 0.5);
+   font-size: 30px;
+   background-color: rgba(0,0,0,.1);
+   box-shadow: 0px 5px 10px rgba(0,0,0,.5);   
+   padding: 2px 13px 5px;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: .3s;
+   position: fixed;
+   top: 10px;
+   left: 10px;
+   animation: fadeIn 1s backwards ease-out .2s;
+ }
+
+ .rewind:hover {
+  box-shadow: 0px 5px 15px rgba(0,0,0,.5);
+  transform: scale(1.02);
+  color: rgba(0, 102, 255, 1);
+   
+ }
+
+ img {
+   position: relative;
+   left: 50%;
+   transform: translateX(-50%);
+ }
+
+ @keyframes fadeIn {
+   from {
+     opacity: 0;
+   }
+
+   to {
+    opacity: 1;     
+   }
+ }
+  
+</style>
+
+<body>
+
+    <div class="wrapper">
+        <h1 style="text-align: center">Super important Hello Wolrd!</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+
+        <img src="https://source.unsplash.com/640x480?v=1" alt="beauty" style="text-align: center; display: inline;">
+
+        <h1 style="text-align: center">Super important Hello Wolrd!</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+
+        <img src="https://source.unsplash.com/640x480?v=2" alt="beauty">
+
+        <h1 style="text-align: center">Super important Hello Wolrd!</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Reprehenderit accusantium iste laborum, pariatur ea repudiandae nisi ex recusandae fugit nihil earum similique, amet inventore sint nobis distinctio natus dolorum culpa!</p>
+
+
+        <span class="rewind" id="rewind" hidden>⏫</span>
+    </div>
+  
+    
+
+  <script>
+
+    const UIrewind = document.getElementById('rewind');
+
+    document.addEventListener('scroll', function(e) {
+      const clientHeight = document.documentElement.clientHeight;
+      let pageYOffset = window.pageYOffset;
+
+      UIrewind.hidden =  pageYOffset >=  clientHeight ?  false : true;
+    });
+
+    UIrewind.addEventListener('click', function(e) {
+      let timerId = setInterval(() => {
+        window.scrollBy(0, -15);
+        if(window.pageYOffset === 0) {
+          clearInterval(timerId);
+        }
+      }, 0);
+    })
+
+    
+  </script>
+
+
+
+</body>
+
+</html>
