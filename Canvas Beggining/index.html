@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>Task List</title>
+</head>
+<style>
+  #c {
+    width: calc(50vw - 20px);
+    height: 500px;
+    border: 1px solid;
+  }
+</style>
+
+<body>
+  <canvas id='c'></canvas>
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+
+  <script>
+    'use strict'
+
+    // -------------- GETIING CONTEXT ---------------------
+    const canvas = document.getElementById('c')
+    canvas.width = canvas.scrollWidth 
+    canvas.height = canvas.scrollHeight 
+    const ctx = canvas.getContext('2d')
+    
+
+    // -------------- DRAWING PRIMITIVE SHAPES ---------------------
+    ctx.beginPath()
+    ctx.moveTo(100, 100)
+    ctx.lineTo(300, 200)
+    ctx.lineTo(300, 300)
+    ctx.fillStyle = 'yellow'
+    ctx.fill()
+
+    ctx.translate(10, 10)
+
+    ctx.fillStyle = 'red'
+    ctx.fillRect(0,0,100,100)
+
+    ctx.strokeStyle = 'purple'
+    ctx.lineWidth = 5
+    ctx.strokeRect(150, 0, 100, 100)
+
+    ctx.fillStyle = 'green'
+    ctx.beginPath()
+    ctx.arc(350, 50, 50, Math.PI / 5,  Math.PI)
+    ctx.lineTo(350, 50)
+    ctx.fill()
+
+    ctx.strokeStyle = 'pink'
+    ctx.beginPath()
+    ctx.arc(500, 50, 50, 0, 2 * Math.PI)
+    ctx.stroke()
+
+    // -------------- LOADING AN IMAGE ---------------------
+    const image = new Image()
+    image.src = 'http://xinature.com/wp-content/uploads/2016/10/flowers-love-rose-flower-delicte-blue-wallpapers-big-size.jpg'
+
+    window.onload = e => ctx.drawImage(image, 0, 0, $canvas.width, $canvas.height)
+    
+
+    // -------------- MAKING ANIMATION ---------------------
+
+    class MineAnimation {
+      constructor(y1, y2, y3) {
+        this.rectangles = [
+          {x: 0, y: y1, width: 100, height: 100, color: 'red', speedX: 60},
+          {x: 0, y: y2, width: 100, height: 100, color: 'blue', speedX: 120},
+          {x: 0, y: y3, width: 100, height: 100, color: 'yellow', speedX: 180}
+        ],
+
+        this.updateBound = this.update.bind(this),
+        this.prevTime = 0
+      }
+
+      update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+        const curTime = Date.now()
+        const deltaTime = (curTime - (this.prevTime || Date.now())) / 1000
+        this.prevTime = curTime
+
+        this.rectangles.forEach(rect => {
+          ctx.fillStyle = rect.color
+          ctx.fillRect(rect.x, rect.y, rect.width, rect.height)
+          rect.x += rect.speedX * deltaTime
+        })
+
+        requestAnimationFrame(this.updateBound)
+      } 
+    }
+
+    let animation = new MineAnimation(0, 200, 50)  
+    animation.update()
+
+
+  // -------------- HIT DETECTION ---------------------
+    function Rectangle(x, y, width, height, color) {
+      this.x = x
+      this.y = y
+      this.width = width
+      this.height = height
+      this.color = color
+    }
+
+    Rectangle.prototype.drawRect = function() {
+      ctx.fillStyle = this.color
+      ctx.fillRect(this.x, this.y, this.width, this.height)
+    }
+
+    Rectangle.prototype.isTouched = function(x, y) {
+      return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y
+    }
+
+    const rectangle = new Rectangle(100, 100, 200, 100, 'greenyellow')
+    rectangle.drawRect()
+
+
+    function Circle(x, y, r, color) {
+      this.x = x
+      this.y = y
+      this.r = r
+      this.color = color
+    }
+
+    Circle.prototype.drawCircle = function() {
+      ctx.fillStyle = this.color
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    Circle.prototype.isTouched = function(x, y) {
+      return this.r >= Math.sqrt((this.x - x) ** 2 + (this.y - y) ** 2)
+    }
+
+
+    const circle = new Circle(200, 300, 70, 'yellowgreen')
+    circle.drawCircle()
+
+    const circle2 = new Circle(200, 300, 1, 'red')
+    circle2.drawCircle()
+
+
+    canvas.addEventListener('click', e => {
+      if(rectangle.isTouched(e.layerX, e.layerY)) {
+         console.log(`Rect is touched on ${e.layerX - rectangle.x}!`);
+      }
+
+      if(circle.isTouched(e.layerX, e.layerY)) {
+        console.log(`Circle is touched on ${Math.round(Math.sqrt((e.layerX - circle.x) ** 2 + (e.layerY - circle.y) ** 2))}!`);        
+      }
+    })
+
+    // -------------- NATIVE HIT DETECTION (experimental) ---------------------
+    ctx.beginPath()
+    ctx.moveTo(200, 100)
+    ctx.lineTo(300, 200)
+    ctx.lineTo(100, 200)
+    ctx.fill()
+    ctx.addHitRegion({id: 'triangle'})
+
+    canvas.addEventListener('mousemove', e => {
+      if(e.region) {
+        console.log(`${e.region} was hit`);
+      }
+    })
+
+
+    // -------------- CHANGING PIXEL COLOR ON IMAGE (works only in server) ---------------------
+    var image = new Image();
+
+    image.src = 'https://pds.exblog.jp/pds/1/201208/02/50/d0261750_532680.jpg';
+    window.onload = function() {
+
+    // Draw image onto canvas (full size)
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    // Get pixel data from the canvas
+    var pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    for(var i = 0; i < pixelData.data.length; i += 4) {
+
+      // Set green and blue channels to 0
+      pixelData.data[i + 1] = 0; // g
+      pixelData.data[i + 2] = 0; // b
+    }
+
+    // Put new pixel data back into canvas
+    ctx.putImageData(pixelData, 0, 0);
+};
+
+
+
+
+    
+
+
+    
+
+
+    
+
+    
+
+  
+
+  </script>
+
+</body>
+
+</html>
