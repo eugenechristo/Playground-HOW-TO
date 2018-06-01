@@ -196,7 +196,98 @@
 };
 
 
+  // ---------- PAINT PROGRAM (clear, play, save) -----------
 
+    let isMouseDown = false
+    let coords = []
+    const radius = 5
+    const color = 'orangered'
+
+    canvas.addEventListener('mousedown', e => isMouseDown = true)
+    canvas.addEventListener('mouseup', e => {
+      isMouseDown = false
+      ctx.beginPath()
+      coords.push('mouseup')
+    })
+    
+    ctx.lineWidth = radius*2
+    ctx.strokeStyle = color
+    ctx.fillStyle = color
+
+    canvas.addEventListener('mousemove', e => {
+      if(isMouseDown) {
+        let x = e.layerX-10 // - border width if necessary
+        let y = e.layerY-10 // - border width if necessary
+
+        coords.push([x, y])
+
+        ctx.lineTo(x, y)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+    }
+    })
+
+    function save() {
+      localStorage.setItem('coords', JSON.stringify(coords))
+    }
+
+    function clear() {
+      ctx.fillStyle = 'white'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      ctx.beginPath()
+      ctx.fillStyle = color
+    }
+
+    function replay() {
+      let timer = setInterval(() => {
+        if(!coords.length) {
+          clearInterval(timer)
+          ctx.beginPath()
+          return
+        }
+        
+        let coord = coords.shift()
+        let x = coord[0]
+        let y = coord[1]
+
+        ctx.lineTo(x, y)
+        ctx.stroke()
+
+        ctx.beginPath()
+        ctx.arc(x, y, radius, 0, 2 * Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+      }, 5)
+    }
+
+    document.addEventListener('keydown', e => {
+      if(e.code === 'KeyS') {
+        save()
+        console.log('Saved');
+      }
+
+      if(e.code === 'KeyR') {
+        console.log('Replaying...');
+        coords = JSON.parse(localStorage.getItem('coords'))
+        clear()
+        replay()
+      }
+
+      if(e.code === 'KeyC') {
+        clear()
+        console.log('Cleared');        
+      }
+
+    })
 
     
 
